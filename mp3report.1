@@ -1,0 +1,774 @@
+.rn '' }`
+''' $RCSfile$$Revision$$Date$
+'''
+''' $Log$
+'''
+.de Sh
+.br
+.if t .Sp
+.ne 5
+.PP
+\fB\\$1\fR
+.PP
+..
+.de Sp
+.if t .sp .5v
+.if n .sp
+..
+.de Ip
+.br
+.ie \\n(.$>=3 .ne \\$3
+.el .ne 3
+.IP "\\$1" \\$2
+..
+.de Vb
+.ft CW
+.nf
+.ne \\$1
+..
+.de Ve
+.ft R
+
+.fi
+..
+'''
+'''
+'''     Set up \*(-- to give an unbreakable dash;
+'''     string Tr holds user defined translation string.
+'''     Bell System Logo is used as a dummy character.
+'''
+.tr \(*W-|\(bv\*(Tr
+.ie n \{\
+.ds -- \(*W-
+.ds PI pi
+.if (\n(.H=4u)&(1m=24u) .ds -- \(*W\h'-12u'\(*W\h'-12u'-\" diablo 10 pitch
+.if (\n(.H=4u)&(1m=20u) .ds -- \(*W\h'-12u'\(*W\h'-8u'-\" diablo 12 pitch
+.ds L" ""
+.ds R" ""
+'''   \*(M", \*(S", \*(N" and \*(T" are the equivalent of
+'''   \*(L" and \*(R", except that they are used on ".xx" lines,
+'''   such as .IP and .SH, which do another additional levels of
+'''   double-quote interpretation
+.ds M" """
+.ds S" """
+.ds N" """""
+.ds T" """""
+.ds L' '
+.ds R' '
+.ds M' '
+.ds S' '
+.ds N' '
+.ds T' '
+'br\}
+.el\{\
+.ds -- \(em\|
+.tr \*(Tr
+.ds L" ``
+.ds R" ''
+.ds M" ``
+.ds S" ''
+.ds N" ``
+.ds T" ''
+.ds L' `
+.ds R' '
+.ds M' `
+.ds S' '
+.ds N' `
+.ds T' '
+.ds PI \(*p
+'br\}
+.\"	If the F register is turned on, we'll generate
+.\"	index entries out stderr for the following things:
+.\"		TH	Title 
+.\"		SH	Header
+.\"		Sh	Subsection 
+.\"		Ip	Item
+.\"		X<>	Xref  (embedded
+.\"	Of course, you have to process the output yourself
+.\"	in some meaninful fashion.
+.if \nF \{
+.de IX
+.tm Index:\\$1\t\\n%\t"\\$2"
+..
+.nr % 0
+.rr F
+.\}
+.TH MP3REPORT 1 "perl 5.005, patch 03" "5/Apr/2000" "User Contributed Perl Documentation"
+.UC
+.if n .hy 0
+.if n .na
+.ds C+ C\v'-.1v'\h'-1p'\s-2+\h'-1p'+\s0\v'.1v'\h'-1p'
+.de CQ          \" put $1 in typewriter font
+.ft CW
+'if n "\c
+'if t \\&\\$1\c
+'if n \\&\\$1\c
+'if n \&"
+\\&\\$2 \\$3 \\$4 \\$5 \\$6 \\$7
+'.ft R
+..
+.\" @(#)ms.acc 1.5 88/02/08 SMI; from UCB 4.2
+.	\" AM - accent mark definitions
+.bd B 3
+.	\" fudge factors for nroff and troff
+.if n \{\
+.	ds #H 0
+.	ds #V .8m
+.	ds #F .3m
+.	ds #[ \f1
+.	ds #] \fP
+.\}
+.if t \{\
+.	ds #H ((1u-(\\\\n(.fu%2u))*.13m)
+.	ds #V .6m
+.	ds #F 0
+.	ds #[ \&
+.	ds #] \&
+.\}
+.	\" simple accents for nroff and troff
+.if n \{\
+.	ds ' \&
+.	ds ` \&
+.	ds ^ \&
+.	ds , \&
+.	ds ~ ~
+.	ds ? ?
+.	ds ! !
+.	ds /
+.	ds q
+.\}
+.if t \{\
+.	ds ' \\k:\h'-(\\n(.wu*8/10-\*(#H)'\'\h"|\\n:u"
+.	ds ` \\k:\h'-(\\n(.wu*8/10-\*(#H)'\`\h'|\\n:u'
+.	ds ^ \\k:\h'-(\\n(.wu*10/11-\*(#H)'^\h'|\\n:u'
+.	ds , \\k:\h'-(\\n(.wu*8/10)',\h'|\\n:u'
+.	ds ~ \\k:\h'-(\\n(.wu-\*(#H-.1m)'~\h'|\\n:u'
+.	ds ? \s-2c\h'-\w'c'u*7/10'\u\h'\*(#H'\zi\d\s+2\h'\w'c'u*8/10'
+.	ds ! \s-2\(or\s+2\h'-\w'\(or'u'\v'-.8m'.\v'.8m'
+.	ds / \\k:\h'-(\\n(.wu*8/10-\*(#H)'\z\(sl\h'|\\n:u'
+.	ds q o\h'-\w'o'u*8/10'\s-4\v'.4m'\z\(*i\v'-.4m'\s+4\h'\w'o'u*8/10'
+.\}
+.	\" troff and (daisy-wheel) nroff accents
+.ds : \\k:\h'-(\\n(.wu*8/10-\*(#H+.1m+\*(#F)'\v'-\*(#V'\z.\h'.2m+\*(#F'.\h'|\\n:u'\v'\*(#V'
+.ds 8 \h'\*(#H'\(*b\h'-\*(#H'
+.ds v \\k:\h'-(\\n(.wu*9/10-\*(#H)'\v'-\*(#V'\*(#[\s-4v\s0\v'\*(#V'\h'|\\n:u'\*(#]
+.ds _ \\k:\h'-(\\n(.wu*9/10-\*(#H+(\*(#F*2/3))'\v'-.4m'\z\(hy\v'.4m'\h'|\\n:u'
+.ds . \\k:\h'-(\\n(.wu*8/10)'\v'\*(#V*4/10'\z.\v'-\*(#V*4/10'\h'|\\n:u'
+.ds 3 \*(#[\v'.2m'\s-2\&3\s0\v'-.2m'\*(#]
+.ds o \\k:\h'-(\\n(.wu+\w'\(de'u-\*(#H)/2u'\v'-.3n'\*(#[\z\(de\v'.3n'\h'|\\n:u'\*(#]
+.ds d- \h'\*(#H'\(pd\h'-\w'~'u'\v'-.25m'\f2\(hy\fP\v'.25m'\h'-\*(#H'
+.ds D- D\\k:\h'-\w'D'u'\v'-.11m'\z\(hy\v'.11m'\h'|\\n:u'
+.ds th \*(#[\v'.3m'\s+1I\s-1\v'-.3m'\h'-(\w'I'u*2/3)'\s-1o\s+1\*(#]
+.ds Th \*(#[\s+2I\s-2\h'-\w'I'u*3/5'\v'-.3m'o\v'.3m'\*(#]
+.ds ae a\h'-(\w'a'u*4/10)'e
+.ds Ae A\h'-(\w'A'u*4/10)'E
+.ds oe o\h'-(\w'o'u*4/10)'e
+.ds Oe O\h'-(\w'O'u*4/10)'E
+.	\" corrections for vroff
+.if v .ds ~ \\k:\h'-(\\n(.wu*9/10-\*(#H)'\s-2\u~\d\s+2\h'|\\n:u'
+.if v .ds ^ \\k:\h'-(\\n(.wu*10/11-\*(#H)'\v'-.4m'^\v'.4m'\h'|\\n:u'
+.	\" for low resolution devices (crt and lpr)
+.if \n(.H>23 .if \n(.V>19 \
+\{\
+.	ds : e
+.	ds 8 ss
+.	ds v \h'-1'\o'\(aa\(ga'
+.	ds _ \h'-1'^
+.	ds . \h'-1'.
+.	ds 3 3
+.	ds o a
+.	ds d- d\h'-1'\(ga
+.	ds D- D\h'-1'\(hy
+.	ds th \o'bp'
+.	ds Th \o'LP'
+.	ds ae ae
+.	ds Ae AE
+.	ds oe oe
+.	ds Oe OE
+.\}
+.rm #[ #] #H #V #F C
+.SH "NAME"
+Neon Goat MP3 Report Generator \- mp3report.pl
+.SH "DESCRIPTION"
+.PP
+.Vb 4
+\& A customizable program to scan a list of (sub)directories, creating a report
+\& from an HTML template. Also calculates various statistics and each song's
+\& playing time. Supports ID3 and ID3v2 tags. Should work on any perl-ized OS;
+\& see homepage for demo - http://mp3report.sourceforge.net
+.Ve
+.SH "CONFIGURING"
+.PP
+.Vb 3
+\& All options can be configured through the command line, see mp3report.pl --help
+\& for more info. You may also want to modify the hard coded defaults at the
+\& top of the program file.
+.Ve
+.Vb 1
+\& See documentation.html for information on customizing your own template file.
+.Ve
+.SH "USAGE"
+.PP
+.Vb 9
+\& Usage: mp3report.pl [options] [directory...]
+\&  --help                 shows this help screen
+\&  --printmode            uses a smaller font for printing
+\&  --title=TITLE          sets the title used in the report
+\&  --outfile=OUTFILE      file to write report to, '-' for STDOUT
+\&  --template=FILE        file to use as report template
+\&  --stdgenres            use standard genres instead of winamp genres
+\&  --id3v2                enable id3v2 support (experimental)
+\&  directory...           dirs to scan (subdirs included)
+.Ve
+.SH "INSTALLATION"
+.PP
+.Vb 11
+\& You should be able to run mp3report.pl directly after decompressing it:
+\& 
+\& tar xfzv mp3report-1.0.2.tar.gz
+\& cd mp3report-1.0.2
+\& ./mp3report.pl --help
+\& 
+\& If your perl interpreter isn't in /usr/bin/perl, you'll need to change the first line
+\& of mp3report.pl
+\& 
+\& If you'd like to install the MP3::Info perl module so that other programs can
+\& use it, it is available at http://search.cpan.org/search?dist=MP3-Info.
+.Ve
+.SH "CUSTOMIZATION AND TEMPLATES"
+By creating your own HTML file or modifying one of the provided templates, you can customize the output of MP3 Report Generator. These are the various identifiers that MP3 Report Generator can look for in a report:
+.Sh "General Information"
+.Ip "$t_fontsize" 4
+This is either 1 or 2, depending on the \f(CW--printmode\fR flag. If printing mode is on, the idea is that the font size should be a little bit smaller so that it looks better on paper. To make sure this field does something, use \f(CW<FONT SIZE="$t_fontsize"\fR> in your \s-1HTML\s0 code.
+.Ip "$t_title" 4
+Used for the \s-1HTML\s0 \f(CW<TITLE\fR> tag as well as the first line of the report, and is set by specifying \f(CW--title=SOMETHING\fR on the command line.
+.Ip "$t_datetime" 4
+The local date and time when the report was generated.
+.Ip "$t_dirs" 4
+The list of parent directories that was scanned in the report. Each directory is separated by \f(CW<BR&gt;&amp;nbsp;&amp;nbsp;\fR so that they are on seperate lines and indented.
+.Ip "$t_numdirs" 4
+The total number of directories and subdirectories scanned in the report.
+.Ip "$t_numfiles" 4
+The total number of \s-1MP3\s0 files included in the report.
+.Ip "$t_size" 4
+The total size of all \s-1MP3\s0 files included in the report combined. This is formatted into \*(L"x.xx \s-1GB\s0 (y.yy \s-1MB\s0)\*(R".
+.Ip "$t_playtime" 4
+The total playing time of all songs combined. This is formatted into an English sentence (4 days, 3 hours, 2 minutes, 1 second).
+.Ip "$t_exectime" 4
+The total time it took to genereate the report. This is formatted into an English sentence (4 days, 3 hours, 2 minutes, 1 second).
+.Ip "$t_avgsize" 4
+The average size of the MP3s in this report. This is formatted into \*(L"x.xx \s-1MB\s0\*(R".
+.Ip "$t_avgplaytime" 4
+The average playing time of a single song in the report. This is formatted into an English sentence (3 hours, 2 minutes, 1 second).
+.Sh "Report Settings"
+.Ip "$t_filename" 4
+The filename that the report is being written to.
+.Ip "$t_template_filename" 4
+The filename of the template that is being used.
+.Ip "$t_printmode" 4
+Either \*(L"Yes\*(R" or \*(L"No\*(R" depending on whether the \f(CW--printmode\fR flag was specified.
+.Ip "$t_customdirs" 4
+Either \*(L"Yes\*(R" or \*(L"No\*(R" depending on whether user specified custom directories to scan on the command line.
+.Ip "$t_genretype" 4
+Either \*(L"Standard\*(R" or \*(L"WinAMP\*(R" depending on whether or not the user specified \f(CW--stdgenres\fR.
+.Ip "$t_id3v2" 4
+Either \*(L"Yes\*(R" or \*(L"No\*(R" depending on whether the \f(CW--id3v2\fR flag was specified.
+.Sh "Item Information"
+.Ip "$item_dir" 4
+The current directory that is being scanned.
+.Ip "$item_num" 4
+The current sequential number of the item found.
+.Ip "$item_filename" 4
+The filename of the item found. \s-1NOTE\s0: This in versions older than 1.0.2, this variable was called \f(CW$item_name\fR.
+.Ip "$item_size" 4
+The size of the item found. This is formatted into \*(L"x.xx \s-1MB\s0\*(R".
+.Ip "$item_bgcolor" 4
+This will either be \f(CW#FFFFFF\fR or \f(CW#EEEEEE\fR (white or light gray) depending on whether or not the current item number is even or odd. This is used to make the cell color in tables alternate to make the report easier to read. In order for this to work, your \s-1HTML\s0 code must look something like \f(CW<TD BGCOLOR="$item_bgcolor">\fR\f(CW...</TD>\fR.
+.Ip "$item_len" 4
+The playing time of the song found, formatted into \*(L"\s-1XX:YY\s0\*(R" (minutes:seconds).
+.Sh "\s-1MP3\s0 Information"
+.Ip "$item_totalseconds" 4
+The total number of seconds in the current song.
+.Ip "$item_mp3version" 4
+The \s-1MPEG\s0 version number of the current \s-1MP3\s0, usually 1.
+.Ip "$item_stereo" 4
+Either \*(L"Stereo\*(R" or \*(L"Mono\*(R" depending on the number of channels in the \s-1MP3\s0.
+.Ip "$item_mpeglayer" 4
+The \s-1MPEG\s0 layer number, usually 3.
+.Ip "$item_bitrate" 4
+The bitrate of the current \s-1MP3\s0 in kbps.
+.Ip "$item_vbr" 4
+If the current \s-1MP3\s0 is encoded at a variable bitrate, this will equal \*(L"\s-1VBR\s0\*(R". If not, it will be a blank string.
+.Ip "$item_copyrighted" 4
+Either \*(L"Copyrighted\*(R" or \*(L"Not copyrighted\*(R" depending on the \s-1MP3\s0's copyright flag.
+.Ip "$item_frequency" 4
+The frequency of the current \s-1MP3\s0 in kHz.
+.Sh "\s-1ID3\s0 Tag Information"
+.Ip "$item_id3title" 4
+The song's \s-1ID3\s0 title, maximum 30 characters.
+.Ip "$item_id3artist" 4
+The song's \s-1ID3\s0 artist, maximum 30 characters.
+.Ip "$item_id3album" 4
+The song's \s-1ID3\s0 album, maximum 30 characters.
+.Ip "$item_id3year" 4
+The song's \s-1ID3\s0 year, maximum 4 characters.
+.Ip "$item_id3comment" 4
+The song's \s-1ID3\s0 comment, maximum 30 characters (28 if the \s-1ID3\s0 tag also contains a track number).
+.Ip "$item_id3genre" 4
+The song's \s-1ID3\s0 genre. You may disable WinAMP genres by specifying the \f(CW--stdgenres\fR flag.
+.Ip "$item_id3tracknum" 4
+The song's ID3v1.1 track number (if present), maximum 2 characters.
+.Sh "ID3v2 Tag Information"
+ID3v2.3.0 (or later) tags are also supported. To enable ID3v2 support, use the \f(CW--id3v2\fR flag on the command line. The following is taken from \f(CWMPEG::MP3Info::v2_tag_names\fR
+.Ip "$item_id3v2_wpay" 4
+\s-1WPAY\s0: Payment
+.Ip "$item_id3v2_text" 4
+\s-1TEXT\s0: Lyricist/Text writer
+.Ip "$item_id3v2_toly" 4
+\s-1TOLY\s0: Original \fIlyricist\fR\|(s)/text \fIwriter\fR\|(s)
+.Ip "$item_id3v2_tmed" 4
+\s-1TMED\s0: Media type
+.Ip "$item_id3v2_rvad" 4
+\s-1RVAD\s0: Relative volume adjustment
+.Ip "$item_id3v2_time" 4
+\s-1TIME\s0: Time
+.Ip "$item_id3v2_rbuf" 4
+\s-1RBUF\s0: Recommended buffer size
+.Ip "$item_id3v2_toal" 4
+\s-1TOAL\s0: Original album/movie/show title
+.Ip "$item_id3v2_trck" 4
+\s-1TRCK\s0: Track number/Position in set
+.Ip "$item_id3v2_ipls" 4
+\s-1IPLS\s0: Involved people list
+.Ip "$item_id3v2_mllt" 4
+\s-1MLLT\s0: \s-1MPEG\s0 location lookup table
+.Ip "$item_id3v2_tkey" 4
+\s-1TKEY\s0: Initial key
+.Ip "$item_id3v2_apic" 4
+\s-1APIC\s0: Attached picture
+.Ip "$item_id3v2_sytc" 4
+\s-1SYTC\s0: Synchronized tempo codes
+.Ip "$item_id3v2_tyer" 4
+\s-1TYER\s0: Year
+.Ip "$item_id3v2_tpos" 4
+\s-1TPOS\s0: Part of a set
+.Ip "$item_id3v2_trsn" 4
+\s-1TRSN\s0: Internet radio station name
+.Ip "$item_id3v2_ufid" 4
+\s-1UFID\s0: Unique file identifier
+.Ip "$item_id3v2_trso" 4
+\s-1TRSO\s0: Internet radio station owner
+.Ip "$item_id3v2_tsiz" 4
+\s-1TSIZ\s0: Size
+.Ip "$item_id3v2_tenc" 4
+\s-1TENC\s0: Encoded by
+.Ip "$item_id3v2_trda" 4
+\s-1TRDA\s0: Recording dates
+.Ip "$item_id3v2_comm" 4
+\s-1COMM\s0: Comments
+.Ip "$item_id3v2_sylt" 4
+\s-1SYLT\s0: Synchronized lyric/text
+.Ip "$item_id3v2_woaf" 4
+\s-1WOAF\s0: Official audio file webpage
+.Ip "$item_id3v2_link" 4
+\s-1LINK\s0: Linked information
+.Ip "$item_id3v2_comr" 4
+\s-1COMR\s0: Commercial frame
+.Ip "$item_id3v2_tbpm" 4
+\s-1TBPM\s0: \s-1BPM\s0 (beats per minute)
+.Ip "$item_id3v2_pcnt" 4
+\s-1PCNT\s0: Play counter
+.Ip "$item_id3v2_tofn" 4
+\s-1TOFN\s0: Original filename
+.Ip "$item_id3v2_woar" 4
+\s-1WOAR\s0: Official artist/performer webpage
+.Ip "$item_id3v2_woas" 4
+\s-1WOAS\s0: Official audio source webpage
+.Ip "$item_id3v2_tpe1" 4
+\s-1TPE1\s0: Lead \fIperformer\fR\|(s)/\fISoloist\fR\|(s)
+.Ip "$item_id3v2_tflt" 4
+\s-1TFLT\s0: File type
+.Ip "$item_id3v2_tpe2" 4
+\s-1TPE2\s0: Band/orchestra/accompaniment
+.Ip "$item_id3v2_tsrc" 4
+\s-1TSRC\s0: \s-1ISRC\s0 (international standard recording code)
+.Ip "$item_id3v2_tpe3" 4
+\s-1TPE3\s0: Conductor/performer refinement
+.Ip "$item_id3v2_rvrb" 4
+\s-1RVRB\s0: Reverb
+.Ip "$item_id3v2_tpe4" 4
+\s-1TPE4\s0: Interpreted, remixed, or otherwise modified by
+.Ip "$item_id3v2_mcdi" 4
+\s-1MCDI\s0: Music \s-1CD\s0 identifier
+.Ip "$item_id3v2_tdly" 4
+\s-1TDLY\s0: Playlist delay
+.Ip "$item_id3v2_tdat" 4
+\s-1TDAT\s0: Date
+.Ip "$item_id3v2_tory" 4
+\s-1TORY\s0: Original release year
+.Ip "$item_id3v2_tlan" 4
+\s-1TLAN\s0: \fILanguage\fR\|(s)
+.Ip "$item_id3v2_tcom" 4
+\s-1TCOM\s0: Composer
+.Ip "$item_id3v2_tlen" 4
+\s-1TLEN\s0: Length
+.Ip "$item_id3v2_tcon" 4
+\s-1TCON\s0: Content type
+.Ip "$item_id3v2_tcop" 4
+\s-1TCOP\s0: Copyright message
+.Ip "$item_id3v2_owne" 4
+\s-1OWNE\s0: Ownership frame
+.Ip "$item_id3v2_tpub" 4
+\s-1TPUB\s0: Publisher
+.Ip "$item_id3v2_txxx" 4
+\s-1TXXX\s0: User defined text information frame
+.Ip "$item_id3v2_geob" 4
+\s-1GEOB\s0: General encapsulated object
+.Ip "$item_id3v2_tsse" 4
+\s-1TSSE\s0: Software/Hardware and settings used for encoding
+.Ip "$item_id3v2_priv" 4
+\s-1PRIV\s0: Private frame
+.Ip "$item_id3v2_tit1" 4
+\s-1TIT1\s0: Content group description
+.Ip "$item_id3v2_talb" 4
+\s-1TALB\s0: Album/Movie/Show title
+.Ip "$item_id3v2_tit2" 4
+\s-1TIT2\s0: Title/songname/content description
+.Ip "$item_id3v2_tit3" 4
+\s-1TIT3\s0: Subtitle/Description refinement
+.Ip "$item_id3v2_poss" 4
+\s-1POSS\s0: Position synchronisation frame
+.Ip "$item_id3v2_grid" 4
+\s-1GRID\s0: Group identification registration
+.Ip "$item_id3v2_uslt" 4
+\s-1USLT\s0: Unsychronized lyric/text transcription
+.Ip "$item_id3v2_encr" 4
+\s-1ENCR\s0: Encryption method registration
+.Ip "$item_id3v2_town" 4
+\s-1TOWN\s0: File owner/licensee
+.Ip "$item_id3v2_wors" 4
+\s-1WORS\s0: Official internet radio station homepage
+.Ip "$item_id3v2_etco" 4
+\s-1ETCO\s0: Event timing codes
+.Ip "$item_id3v2_equa" 4
+\s-1EQUA\s0: Equalization
+.Ip "$item_id3v2_wcom" 4
+\s-1WCOM\s0: Commercial information
+.Ip "$item_id3v2_aenc" 4
+\s-1AENC\s0: Audio encryption
+.Ip "$item_id3v2_tope" 4
+\s-1TOPE\s0: Original \fIartist\fR\|(s)/\fIperformer\fR\|(s)
+.Ip "$item_id3v2_wcop" 4
+\s-1WCOP\s0: Copyright/Legal information
+.Ip "$item_id3v2_popm" 4
+\s-1POPM\s0: Popularimeter
+.Ip "$item_id3v2_wpub" 4
+\s-1WPUB\s0: Publishers official webpage
+.Ip "$item_id3v2_wxxx" 4
+\s-1WXXX\s0: User defined \s-1URL\s0 link frame
+.Ip "$item_id3v2_user" 4
+\s-1USER\s0: Terms of use
+.SH "ACKNOWLEDGEMENTS"
+.PP
+.Vb 4
+\& Much thanks to Chris Nandor and contributors to MP3::Info... 
+\& it saved me a lot of time :) And to Larry Wall for such a great language.
+\& 
+\& Hello to MMT, UCLA LUG, cX, and of course the DJs of Mister Balak's Neighborhood!
+.Ve
+.SH "SEE ALSO"
+.Ip "\s-1MP3::\s0Info" 4
+http://search.cpan.org/search?dist=\s-1MP3-\s0Info
+.Ip "ID3v2" 4
+http://www.id3.org/
+.Ip "SourceForge" 4
+http://www.sourceforge.net
+Damn, these guys rock.
+.Ip "icecast" 4
+http://www.icecast.org
+.SH "AUTHOR AND COPYRIGHT"
+.PP
+.Vb 15
+\& Neon Goat MP3 Report Generator
+\& v1.0.2 - April 5, 2000
+\& Copyright (C) 2000, David Parker, Neon Goat Productions.
+\& 
+\& This program is free software; you can redistribute it and/or modify
+\& it under the terms of the GNU General Public License as published by
+\& the Free Software Foundation; either version 2 of the License, or
+\& (at your option) any later version.
+\& 
+\& See COPYING or http://www.gnu.org for more information.
+\& 
+\& David Parker
+\& david@neongoat.com
+\& http://www.neongoat.com
+\& http://mp3report.sourceforge.net
+.Ve
+
+.rn }` ''
+.IX Title "MP3REPORT 1"
+.IX Name "Neon Goat MP3 Report Generator - mp3report.pl"
+
+.IX Header "NAME"
+
+.IX Header "DESCRIPTION"
+
+.IX Header "CONFIGURING"
+
+.IX Header "USAGE"
+
+.IX Header "INSTALLATION"
+
+.IX Header "CUSTOMIZATION AND TEMPLATES"
+
+.IX Subsection "General Information"
+
+.IX Item "$t_fontsize"
+
+.IX Item "$t_title"
+
+.IX Item "$t_datetime"
+
+.IX Item "$t_dirs"
+
+.IX Item "$t_numdirs"
+
+.IX Item "$t_numfiles"
+
+.IX Item "$t_size"
+
+.IX Item "$t_playtime"
+
+.IX Item "$t_exectime"
+
+.IX Item "$t_avgsize"
+
+.IX Item "$t_avgplaytime"
+
+.IX Subsection "Report Settings"
+
+.IX Item "$t_filename"
+
+.IX Item "$t_template_filename"
+
+.IX Item "$t_printmode"
+
+.IX Item "$t_customdirs"
+
+.IX Item "$t_genretype"
+
+.IX Item "$t_id3v2"
+
+.IX Subsection "Item Information"
+
+.IX Item "$item_dir"
+
+.IX Item "$item_num"
+
+.IX Item "$item_filename"
+
+.IX Item "$item_size"
+
+.IX Item "$item_bgcolor"
+
+.IX Item "$item_len"
+
+.IX Subsection "\s-1MP3\s0 Information"
+
+.IX Item "$item_totalseconds"
+
+.IX Item "$item_mp3version"
+
+.IX Item "$item_stereo"
+
+.IX Item "$item_mpeglayer"
+
+.IX Item "$item_bitrate"
+
+.IX Item "$item_vbr"
+
+.IX Item "$item_copyrighted"
+
+.IX Item "$item_frequency"
+
+.IX Subsection "\s-1ID3\s0 Tag Information"
+
+.IX Item "$item_id3title"
+
+.IX Item "$item_id3artist"
+
+.IX Item "$item_id3album"
+
+.IX Item "$item_id3year"
+
+.IX Item "$item_id3comment"
+
+.IX Item "$item_id3genre"
+
+.IX Item "$item_id3tracknum"
+
+.IX Subsection "ID3v2 Tag Information"
+
+.IX Item "$item_id3v2_wpay"
+
+.IX Item "$item_id3v2_text"
+
+.IX Item "$item_id3v2_toly"
+
+.IX Item "$item_id3v2_tmed"
+
+.IX Item "$item_id3v2_rvad"
+
+.IX Item "$item_id3v2_time"
+
+.IX Item "$item_id3v2_rbuf"
+
+.IX Item "$item_id3v2_toal"
+
+.IX Item "$item_id3v2_trck"
+
+.IX Item "$item_id3v2_ipls"
+
+.IX Item "$item_id3v2_mllt"
+
+.IX Item "$item_id3v2_tkey"
+
+.IX Item "$item_id3v2_apic"
+
+.IX Item "$item_id3v2_sytc"
+
+.IX Item "$item_id3v2_tyer"
+
+.IX Item "$item_id3v2_tpos"
+
+.IX Item "$item_id3v2_trsn"
+
+.IX Item "$item_id3v2_ufid"
+
+.IX Item "$item_id3v2_trso"
+
+.IX Item "$item_id3v2_tsiz"
+
+.IX Item "$item_id3v2_tenc"
+
+.IX Item "$item_id3v2_trda"
+
+.IX Item "$item_id3v2_comm"
+
+.IX Item "$item_id3v2_sylt"
+
+.IX Item "$item_id3v2_woaf"
+
+.IX Item "$item_id3v2_link"
+
+.IX Item "$item_id3v2_comr"
+
+.IX Item "$item_id3v2_tbpm"
+
+.IX Item "$item_id3v2_pcnt"
+
+.IX Item "$item_id3v2_tofn"
+
+.IX Item "$item_id3v2_woar"
+
+.IX Item "$item_id3v2_woas"
+
+.IX Item "$item_id3v2_tpe1"
+
+.IX Item "$item_id3v2_tflt"
+
+.IX Item "$item_id3v2_tpe2"
+
+.IX Item "$item_id3v2_tsrc"
+
+.IX Item "$item_id3v2_tpe3"
+
+.IX Item "$item_id3v2_rvrb"
+
+.IX Item "$item_id3v2_tpe4"
+
+.IX Item "$item_id3v2_mcdi"
+
+.IX Item "$item_id3v2_tdly"
+
+.IX Item "$item_id3v2_tdat"
+
+.IX Item "$item_id3v2_tory"
+
+.IX Item "$item_id3v2_tlan"
+
+.IX Item "$item_id3v2_tcom"
+
+.IX Item "$item_id3v2_tlen"
+
+.IX Item "$item_id3v2_tcon"
+
+.IX Item "$item_id3v2_tcop"
+
+.IX Item "$item_id3v2_owne"
+
+.IX Item "$item_id3v2_tpub"
+
+.IX Item "$item_id3v2_txxx"
+
+.IX Item "$item_id3v2_geob"
+
+.IX Item "$item_id3v2_tsse"
+
+.IX Item "$item_id3v2_priv"
+
+.IX Item "$item_id3v2_tit1"
+
+.IX Item "$item_id3v2_talb"
+
+.IX Item "$item_id3v2_tit2"
+
+.IX Item "$item_id3v2_tit3"
+
+.IX Item "$item_id3v2_poss"
+
+.IX Item "$item_id3v2_grid"
+
+.IX Item "$item_id3v2_uslt"
+
+.IX Item "$item_id3v2_encr"
+
+.IX Item "$item_id3v2_town"
+
+.IX Item "$item_id3v2_wors"
+
+.IX Item "$item_id3v2_etco"
+
+.IX Item "$item_id3v2_equa"
+
+.IX Item "$item_id3v2_wcom"
+
+.IX Item "$item_id3v2_aenc"
+
+.IX Item "$item_id3v2_tope"
+
+.IX Item "$item_id3v2_wcop"
+
+.IX Item "$item_id3v2_popm"
+
+.IX Item "$item_id3v2_wpub"
+
+.IX Item "$item_id3v2_wxxx"
+
+.IX Item "$item_id3v2_user"
+
+.IX Header "ACKNOWLEDGEMENTS"
+
+.IX Header "SEE ALSO"
+
+.IX Item "\s-1MP3::\s0Info"
+
+.IX Item "ID3v2"
+
+.IX Item "SourceForge"
+
+.IX Item "icecast"
+
+.IX Header "AUTHOR AND COPYRIGHT"
+

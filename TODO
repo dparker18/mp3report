@@ -1,0 +1,10 @@
+TODO
+----
+make templates allow perl code, eperl-style
+report to multi-page HTML, sorted by letter, group, genre, etc. Write index to main page w/ stats
+cgi-ize for searching online and/or submitting checkbox array'd lists
+predef user funcs for finetuning urls, output display, etc.
+add url in docs/help for subscribing to new release announcements
+
+make install script, place into /usr/local/bin, /usr/local/lib/mp3report (for templates), etc?
+rpm/deb-ize into package?

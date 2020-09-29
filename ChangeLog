@@ -1,0 +1,31 @@
+v1.0.2, 04/05/2000
+------------------
+changes by David Parker:
+  - updated code for MP3::Info instead of MPEG::MP3Info
+  - now supports VBR (requested by Jean-Noel GADREAU <jean-noel@gadreau.net>)
+  - dir header is now written last, allows variable substitution from non-header variables (Gerard McGlew <gerard.mcglew at swissonline.ch>)
+  - clears out id3 variables from previous match (Eric Lieffers <ericl at socsci.kun.nl>)
+  - better, more secure tempfiles
+  - added man page
+  - no more default hardcoded dirs, shows help instead
+
+v1.0.0, 01/27/2000
+------------------
+  - more cleanup
+  - external template support
+  - lots of new template fields
+  - ID3v2.3.0 experimental support
+  - first attempt at docs
+by David Parker
+
+v0.99.2, 01/22/2000
+-------------------
+changes by David Parker:
+  - cleaned up little things
+  - added OS-specific directory seperator
+  - implemented command line options
+  - made a readme
+
+v0.99.1, 01/21/2000
+-------------------
+  - first release

@@ -1,0 +1,655 @@
+<HTML>
+<HEAD>
+<TITLE>Neon Goat MP3 Report Generator - mp3report.pl</TITLE>
+</HEAD>
+
+<BODY>
+
+<!-- INDEX BEGIN -->
+
+<UL>
+
+	<LI><A HREF="#NAME">NAME</A>
+	<LI><A HREF="#DESCRIPTION">DESCRIPTION</A>
+	<LI><A HREF="#CONFIGURING">CONFIGURING</A>
+	<LI><A HREF="#USAGE">USAGE</A>
+	<LI><A HREF="#INSTALLATION">INSTALLATION</A>
+	<LI><A HREF="#CUSTOMIZATION_AND_TEMPLATES">CUSTOMIZATION AND TEMPLATES</A>
+	<UL>
+
+		<LI><A HREF="#General_Information">General Information</A>
+		<LI><A HREF="#Report_Settings">Report Settings</A>
+		<LI><A HREF="#Item_Information">Item Information</A>
+		<LI><A HREF="#MP3_Information">MP3 Information</A>
+		<LI><A HREF="#ID3_Tag_Information">ID3 Tag Information</A>
+		<LI><A HREF="#ID3v2_Tag_Information">ID3v2 Tag Information</A>
+	</UL>
+
+	<LI><A HREF="#ACKNOWLEDGEMENTS">ACKNOWLEDGEMENTS</A>
+	<LI><A HREF="#SEE_ALSO">SEE ALSO</A>
+	<LI><A HREF="#AUTHOR_AND_COPYRIGHT">AUTHOR AND COPYRIGHT</A>
+</UL>
+<!-- INDEX END -->
+
+<HR>
+<H1><A NAME="NAME">NAME</A></H1>
+<P>
+Neon Goat MP3 Report Generator - mp3report.pl
+
+<P>
+<HR>
+<H1><A NAME="DESCRIPTION">DESCRIPTION</A></H1>
+<P>
+<PRE> A customizable program to scan a list of (sub)directories, creating a report
+ from an HTML template. Also calculates various statistics and each song's
+ playing time. Supports ID3 and ID3v2 tags. Should work on any perl-ized OS;
+ see homepage for demo - <A HREF="http://mp3report.sourceforge.net">http://mp3report.sourceforge.net</A>
+</PRE>
+<P>
+<HR>
+<H1><A NAME="CONFIGURING">CONFIGURING</A></H1>
+<P>
+<PRE> All options can be configured through the command line, see mp3report.pl --help
+ for more info. You may also want to modify the hard coded defaults at the
+ top of the program file.
+</PRE>
+<P>
+<PRE> See documentation.html for information on customizing your own template file.
+</PRE>
+<P>
+<HR>
+<H1><A NAME="USAGE">USAGE</A></H1>
+<P>
+<PRE> Usage: mp3report.pl [options] [directory...]
+  --help                 shows this help screen
+  --printmode            uses a smaller font for printing
+  --title=TITLE          sets the title used in the report
+  --outfile=OUTFILE      file to write report to, '-' for STDOUT
+  --template=FILE        file to use as report template
+  --stdgenres            use standard genres instead of winamp genres
+  --id3v2                enable id3v2 support (experimental)
+  directory...           dirs to scan (subdirs included)
+</PRE>
+<P>
+<HR>
+<H1><A NAME="INSTALLATION">INSTALLATION</A></H1>
+<P>
+<PRE> You should be able to run mp3report.pl directly after decompressing it:
+ 
+ tar xfzv mp3report-1.0.2.tar.gz
+ cd mp3report-1.0.2
+ ./mp3report.pl --help
+ 
+ If your perl interpreter isn't in /usr/bin/perl, you'll need to change the first line
+ of mp3report.pl
+ 
+ If you'd like to install the MP3::Info perl module so that other programs can
+ use it, it is available at <A HREF="http://search.cpan.org/search?dist=MP3-Info.">http://search.cpan.org/search?dist=MP3-Info.</A>
+</PRE>
+<P>
+<HR>
+<H1><A NAME="CUSTOMIZATION_AND_TEMPLATES">CUSTOMIZATION AND TEMPLATES</A></H1>
+<P>
+By creating your own HTML file or modifying one of the provided templates,
+you can customize the output of MP3 Report Generator. These are the various
+identifiers that MP3 Report Generator can look for in a report:
+
+<P>
+<HR>
+<H2><A NAME="General_Information">General Information</A></H2>
+<DL>
+<DT><STRONG><A NAME="item__t_fontsize">$t_fontsize</A></STRONG><DD>
+<P>
+This is either 1 or 2, depending on the <CODE>--printmode</CODE> flag. If printing mode is on, the idea is that the font size should be a
+little bit smaller so that it looks better on paper. To make sure this
+field does something, use <CODE>&lt;FONT SIZE=&quot;$t_fontsize&quot;</CODE>&gt; in your HTML code.
+
+<DT><STRONG><A NAME="item__t_title">$t_title</A></STRONG><DD>
+<P>
+Used for the HTML <CODE>&lt;TITLE</CODE>&gt; tag as well as the first line of the report, and is set by specifying <CODE>--title=SOMETHING</CODE> on the command line.
+
+<DT><STRONG><A NAME="item__t_datetime">$t_datetime</A></STRONG><DD>
+<P>
+The local date and time when the report was generated.
+
+<DT><STRONG><A NAME="item__t_dirs">$t_dirs</A></STRONG><DD>
+<P>
+The list of parent directories that was scanned in the report. Each
+directory is separated by <CODE>&lt;BR&amp;gt;&amp;amp;nbsp;&amp;amp;nbsp;</CODE> so that they are on seperate lines and indented.
+
+<DT><STRONG><A NAME="item__t_numdirs">$t_numdirs</A></STRONG><DD>
+<P>
+The total number of directories and subdirectories scanned in the report.
+
+<DT><STRONG><A NAME="item__t_numfiles">$t_numfiles</A></STRONG><DD>
+<P>
+The total number of MP3 files included in the report.
+
+<DT><STRONG><A NAME="item__t_size">$t_size</A></STRONG><DD>
+<P>
+The total size of all MP3 files included in the report combined. This is
+formatted into ``x.xx GB (y.yy MB)''.
+
+<DT><STRONG><A NAME="item__t_playtime">$t_playtime</A></STRONG><DD>
+<P>
+The total playing time of all songs combined. This is formatted into an
+English sentence (4 days, 3 hours, 2 minutes, 1 second).
+
+<DT><STRONG><A NAME="item__t_exectime">$t_exectime</A></STRONG><DD>
+<P>
+The total time it took to genereate the report. This is formatted into an
+English sentence (4 days, 3 hours, 2 minutes, 1 second).
+
+<DT><STRONG><A NAME="item__t_avgsize">$t_avgsize</A></STRONG><DD>
+<P>
+The average size of the MP3s in this report. This is formatted into ``x.xx
+MB''.
+
+<DT><STRONG><A NAME="item__t_avgplaytime">$t_avgplaytime</A></STRONG><DD>
+<P>
+The average playing time of a single song in the report. This is formatted
+into an English sentence (3 hours, 2 minutes, 1 second).
+
+</DL>
+<P>
+<HR>
+<H2><A NAME="Report_Settings">Report Settings</A></H2>
+<DL>
+<DT><STRONG><A NAME="item__t_filename">$t_filename</A></STRONG><DD>
+<P>
+The filename that the report is being written to.
+
+<DT><STRONG><A NAME="item__t_template_filename">$t_template_filename</A></STRONG><DD>
+<P>
+The filename of the template that is being used.
+
+<DT><STRONG><A NAME="item__t_printmode">$t_printmode</A></STRONG><DD>
+<P>
+Either ``Yes'' or ``No'' depending on whether the <CODE>--printmode</CODE> flag was specified.
+
+<DT><STRONG><A NAME="item__t_customdirs">$t_customdirs</A></STRONG><DD>
+<P>
+Either ``Yes'' or ``No'' depending on whether user specified custom
+directories to scan on the command line.
+
+<DT><STRONG><A NAME="item__t_genretype">$t_genretype</A></STRONG><DD>
+<P>
+Either ``Standard'' or ``WinAMP'' depending on whether or not the user
+specified <CODE>--stdgenres</CODE>.
+
+<DT><STRONG><A NAME="item__t_id3v2">$t_id3v2</A></STRONG><DD>
+<P>
+Either ``Yes'' or ``No'' depending on whether the <CODE>--id3v2</CODE> flag was specified.
+
+</DL>
+<P>
+<HR>
+<H2><A NAME="Item_Information">Item Information</A></H2>
+<DL>
+<DT><STRONG><A NAME="item__item_dir">$item_dir</A></STRONG><DD>
+<P>
+The current directory that is being scanned.
+
+<DT><STRONG><A NAME="item__item_num">$item_num</A></STRONG><DD>
+<P>
+The current sequential number of the item found.
+
+<DT><STRONG><A NAME="item__item_filename">$item_filename</A></STRONG><DD>
+<P>
+The filename of the item found. NOTE: This in versions older than 1.0.2,
+this variable was called $item_name.
+
+<DT><STRONG><A NAME="item__item_size">$item_size</A></STRONG><DD>
+<P>
+The size of the item found. This is formatted into ``x.xx MB''.
+
+<DT><STRONG><A NAME="item__item_bgcolor">$item_bgcolor</A></STRONG><DD>
+<P>
+This will either be <CODE>#FFFFFF</CODE> or <CODE>#EEEEEE</CODE> (white or light gray) depending on whether or not the current item number
+is even or odd. This is used to make the cell color in tables alternate to
+make the report easier to read. In order for this to work, your HTML code
+must look something like <CODE>&amp;lt;TD BGCOLOR=&quot;$item_bgcolor&quot;&amp;gt;</CODE><CODE>...&amp;lt;/TD&amp;gt;</CODE>.
+
+<DT><STRONG><A NAME="item__item_len">$item_len</A></STRONG><DD>
+<P>
+The playing time of the song found, formatted into ``XX:YY''
+(minutes:seconds).
+
+</DL>
+<P>
+<HR>
+<H2><A NAME="MP3_Information">MP3 Information</A></H2>
+<DL>
+<DT><STRONG><A NAME="item__item_totalseconds">$item_totalseconds</A></STRONG><DD>
+<P>
+The total number of seconds in the current song.
+
+<DT><STRONG><A NAME="item__item_mp3version">$item_mp3version</A></STRONG><DD>
+<P>
+The MPEG version number of the current MP3, usually 1.
+
+<DT><STRONG><A NAME="item__item_stereo">$item_stereo</A></STRONG><DD>
+<P>
+Either ``Stereo'' or ``Mono'' depending on the number of channels in the
+MP3.
+
+<DT><STRONG><A NAME="item__item_mpeglayer">$item_mpeglayer</A></STRONG><DD>
+<P>
+The MPEG layer number, usually 3.
+
+<DT><STRONG><A NAME="item__item_bitrate">$item_bitrate</A></STRONG><DD>
+<P>
+The bitrate of the current MP3 in kbps.
+
+<DT><STRONG><A NAME="item__item_vbr">$item_vbr</A></STRONG><DD>
+<P>
+If the current MP3 is encoded at a variable bitrate, this will equal
+``VBR''. If not, it will be a blank string.
+
+<DT><STRONG><A NAME="item__item_copyrighted">$item_copyrighted</A></STRONG><DD>
+<P>
+Either ``Copyrighted'' or ``Not copyrighted'' depending on the MP3's
+copyright flag.
+
+<DT><STRONG><A NAME="item__item_frequency">$item_frequency</A></STRONG><DD>
+<P>
+The frequency of the current MP3 in kHz.
+
+</DL>
+<P>
+<HR>
+<H2><A NAME="ID3_Tag_Information">ID3 Tag Information</A></H2>
+<DL>
+<DT><STRONG><A NAME="item__item_id3title">$item_id3title</A></STRONG><DD>
+<P>
+The song's ID3 title, maximum 30 characters.
+
+<DT><STRONG><A NAME="item__item_id3artist">$item_id3artist</A></STRONG><DD>
+<P>
+The song's ID3 artist, maximum 30 characters.
+
+<DT><STRONG><A NAME="item__item_id3album">$item_id3album</A></STRONG><DD>
+<P>
+The song's ID3 album, maximum 30 characters.
+
+<DT><STRONG><A NAME="item__item_id3year">$item_id3year</A></STRONG><DD>
+<P>
+The song's ID3 year, maximum 4 characters.
+
+<DT><STRONG><A NAME="item__item_id3comment">$item_id3comment</A></STRONG><DD>
+<P>
+The song's ID3 comment, maximum 30 characters (28 if the ID3 tag also
+contains a track number).
+
+<DT><STRONG><A NAME="item__item_id3genre">$item_id3genre</A></STRONG><DD>
+<P>
+The song's ID3 genre. You may disable WinAMP genres by specifying the <CODE>--stdgenres</CODE> flag.
+
+<DT><STRONG><A NAME="item__item_id3tracknum">$item_id3tracknum</A></STRONG><DD>
+<P>
+The song's ID3v1.1 track number (if present), maximum 2 characters.
+
+</DL>
+<P>
+<HR>
+<H2><A NAME="ID3v2_Tag_Information">ID3v2 Tag Information</A></H2>
+<P>
+ID3v2.3.0 (or later) tags are also supported. To enable ID3v2 support, use
+the <CODE>--id3v2</CODE> flag on the command line. The following is taken from <CODE>MPEG::MP3Info::v2_tag_names</CODE>
+
+
+
+<DL>
+<DT><STRONG><A NAME="item__item_id3v2_wpay">$item_id3v2_wpay</A></STRONG><DD>
+<P>
+WPAY: Payment
+
+<DT><STRONG><A NAME="item__item_id3v2_text">$item_id3v2_text</A></STRONG><DD>
+<P>
+TEXT: Lyricist/Text writer
+
+<DT><STRONG><A NAME="item__item_id3v2_toly">$item_id3v2_toly</A></STRONG><DD>
+<P>
+TOLY: Original <CODE>lyricist(s)/text</CODE> <CODE>writer(s)</CODE>
+
+<DT><STRONG><A NAME="item__item_id3v2_tmed">$item_id3v2_tmed</A></STRONG><DD>
+<P>
+TMED: Media type
+
+<DT><STRONG><A NAME="item__item_id3v2_rvad">$item_id3v2_rvad</A></STRONG><DD>
+<P>
+RVAD: Relative volume adjustment
+
+<DT><STRONG><A NAME="item__item_id3v2_time">$item_id3v2_time</A></STRONG><DD>
+<P>
+TIME: Time
+
+<DT><STRONG><A NAME="item__item_id3v2_rbuf">$item_id3v2_rbuf</A></STRONG><DD>
+<P>
+RBUF: Recommended buffer size
+
+<DT><STRONG><A NAME="item__item_id3v2_toal">$item_id3v2_toal</A></STRONG><DD>
+<P>
+TOAL: Original album/movie/show title
+
+<DT><STRONG><A NAME="item__item_id3v2_trck">$item_id3v2_trck</A></STRONG><DD>
+<P>
+TRCK: Track number/Position in set
+
+<DT><STRONG><A NAME="item__item_id3v2_ipls">$item_id3v2_ipls</A></STRONG><DD>
+<P>
+IPLS: Involved people list
+
+<DT><STRONG><A NAME="item__item_id3v2_mllt">$item_id3v2_mllt</A></STRONG><DD>
+<P>
+MLLT: MPEG location lookup table
+
+<DT><STRONG><A NAME="item__item_id3v2_tkey">$item_id3v2_tkey</A></STRONG><DD>
+<P>
+TKEY: Initial key
+
+<DT><STRONG><A NAME="item__item_id3v2_apic">$item_id3v2_apic</A></STRONG><DD>
+<P>
+APIC: Attached picture
+
+<DT><STRONG><A NAME="item__item_id3v2_sytc">$item_id3v2_sytc</A></STRONG><DD>
+<P>
+SYTC: Synchronized tempo codes
+
+<DT><STRONG><A NAME="item__item_id3v2_tyer">$item_id3v2_tyer</A></STRONG><DD>
+<P>
+TYER: Year
+
+<DT><STRONG><A NAME="item__item_id3v2_tpos">$item_id3v2_tpos</A></STRONG><DD>
+<P>
+TPOS: Part of a set
+
+<DT><STRONG><A NAME="item__item_id3v2_trsn">$item_id3v2_trsn</A></STRONG><DD>
+<P>
+TRSN: Internet radio station name
+
+<DT><STRONG><A NAME="item__item_id3v2_ufid">$item_id3v2_ufid</A></STRONG><DD>
+<P>
+UFID: Unique file identifier
+
+<DT><STRONG><A NAME="item__item_id3v2_trso">$item_id3v2_trso</A></STRONG><DD>
+<P>
+TRSO: Internet radio station owner
+
+<DT><STRONG><A NAME="item__item_id3v2_tsiz">$item_id3v2_tsiz</A></STRONG><DD>
+<P>
+TSIZ: Size
+
+<DT><STRONG><A NAME="item__item_id3v2_tenc">$item_id3v2_tenc</A></STRONG><DD>
+<P>
+TENC: Encoded by
+
+<DT><STRONG><A NAME="item__item_id3v2_trda">$item_id3v2_trda</A></STRONG><DD>
+<P>
+TRDA: Recording dates
+
+<DT><STRONG><A NAME="item__item_id3v2_comm">$item_id3v2_comm</A></STRONG><DD>
+<P>
+COMM: Comments
+
+<DT><STRONG><A NAME="item__item_id3v2_sylt">$item_id3v2_sylt</A></STRONG><DD>
+<P>
+SYLT: Synchronized lyric/text
+
+<DT><STRONG><A NAME="item__item_id3v2_woaf">$item_id3v2_woaf</A></STRONG><DD>
+<P>
+WOAF: Official audio file webpage
+
+<DT><STRONG><A NAME="item__item_id3v2_link">$item_id3v2_link</A></STRONG><DD>
+<P>
+LINK: Linked information
+
+<DT><STRONG><A NAME="item__item_id3v2_comr">$item_id3v2_comr</A></STRONG><DD>
+<P>
+COMR: Commercial frame
+
+<DT><STRONG><A NAME="item__item_id3v2_tbpm">$item_id3v2_tbpm</A></STRONG><DD>
+<P>
+TBPM: BPM (beats per minute)
+
+<DT><STRONG><A NAME="item__item_id3v2_pcnt">$item_id3v2_pcnt</A></STRONG><DD>
+<P>
+PCNT: Play counter
+
+<DT><STRONG><A NAME="item__item_id3v2_tofn">$item_id3v2_tofn</A></STRONG><DD>
+<P>
+TOFN: Original filename
+
+<DT><STRONG><A NAME="item__item_id3v2_woar">$item_id3v2_woar</A></STRONG><DD>
+<P>
+WOAR: Official artist/performer webpage
+
+<DT><STRONG><A NAME="item__item_id3v2_woas">$item_id3v2_woas</A></STRONG><DD>
+<P>
+WOAS: Official audio source webpage
+
+<DT><STRONG><A NAME="item__item_id3v2_tpe1">$item_id3v2_tpe1</A></STRONG><DD>
+<P>
+TPE1: Lead <CODE>performer(s)/Soloist(s)</CODE>
+
+<DT><STRONG><A NAME="item__item_id3v2_tflt">$item_id3v2_tflt</A></STRONG><DD>
+<P>
+TFLT: File type
+
+<DT><STRONG><A NAME="item__item_id3v2_tpe2">$item_id3v2_tpe2</A></STRONG><DD>
+<P>
+TPE2: Band/orchestra/accompaniment
+
+<DT><STRONG><A NAME="item__item_id3v2_tsrc">$item_id3v2_tsrc</A></STRONG><DD>
+<P>
+TSRC: ISRC (international standard recording code)
+
+<DT><STRONG><A NAME="item__item_id3v2_tpe3">$item_id3v2_tpe3</A></STRONG><DD>
+<P>
+TPE3: Conductor/performer refinement
+
+<DT><STRONG><A NAME="item__item_id3v2_rvrb">$item_id3v2_rvrb</A></STRONG><DD>
+<P>
+RVRB: Reverb
+
+<DT><STRONG><A NAME="item__item_id3v2_tpe4">$item_id3v2_tpe4</A></STRONG><DD>
+<P>
+TPE4: Interpreted, remixed, or otherwise modified by
+
+<DT><STRONG><A NAME="item__item_id3v2_mcdi">$item_id3v2_mcdi</A></STRONG><DD>
+<P>
+MCDI: Music CD identifier
+
+<DT><STRONG><A NAME="item__item_id3v2_tdly">$item_id3v2_tdly</A></STRONG><DD>
+<P>
+TDLY: Playlist delay
+
+<DT><STRONG><A NAME="item__item_id3v2_tdat">$item_id3v2_tdat</A></STRONG><DD>
+<P>
+TDAT: Date
+
+<DT><STRONG><A NAME="item__item_id3v2_tory">$item_id3v2_tory</A></STRONG><DD>
+<P>
+TORY: Original release year
+
+<DT><STRONG><A NAME="item__item_id3v2_tlan">$item_id3v2_tlan</A></STRONG><DD>
+<P>
+TLAN: <CODE>Language(s)</CODE>
+
+<DT><STRONG><A NAME="item__item_id3v2_tcom">$item_id3v2_tcom</A></STRONG><DD>
+<P>
+TCOM: Composer
+
+<DT><STRONG><A NAME="item__item_id3v2_tlen">$item_id3v2_tlen</A></STRONG><DD>
+<P>
+TLEN: Length
+
+<DT><STRONG><A NAME="item__item_id3v2_tcon">$item_id3v2_tcon</A></STRONG><DD>
+<P>
+TCON: Content type
+
+<DT><STRONG><A NAME="item__item_id3v2_tcop">$item_id3v2_tcop</A></STRONG><DD>
+<P>
+TCOP: Copyright message
+
+<DT><STRONG><A NAME="item__item_id3v2_owne">$item_id3v2_owne</A></STRONG><DD>
+<P>
+OWNE: Ownership frame
+
+<DT><STRONG><A NAME="item__item_id3v2_tpub">$item_id3v2_tpub</A></STRONG><DD>
+<P>
+TPUB: Publisher
+
+<DT><STRONG><A NAME="item__item_id3v2_txxx">$item_id3v2_txxx</A></STRONG><DD>
+<P>
+TXXX: User defined text information frame
+
+<DT><STRONG><A NAME="item__item_id3v2_geob">$item_id3v2_geob</A></STRONG><DD>
+<P>
+GEOB: General encapsulated object
+
+<DT><STRONG><A NAME="item__item_id3v2_tsse">$item_id3v2_tsse</A></STRONG><DD>
+<P>
+TSSE: Software/Hardware and settings used for encoding
+
+<DT><STRONG><A NAME="item__item_id3v2_priv">$item_id3v2_priv</A></STRONG><DD>
+<P>
+PRIV: Private frame
+
+<DT><STRONG><A NAME="item__item_id3v2_tit1">$item_id3v2_tit1</A></STRONG><DD>
+<P>
+TIT1: Content group description
+
+<DT><STRONG><A NAME="item__item_id3v2_talb">$item_id3v2_talb</A></STRONG><DD>
+<P>
+TALB: Album/Movie/Show title
+
+<DT><STRONG><A NAME="item__item_id3v2_tit2">$item_id3v2_tit2</A></STRONG><DD>
+<P>
+TIT2: Title/songname/content description
+
+<DT><STRONG><A NAME="item__item_id3v2_tit3">$item_id3v2_tit3</A></STRONG><DD>
+<P>
+TIT3: Subtitle/Description refinement
+
+<DT><STRONG><A NAME="item__item_id3v2_poss">$item_id3v2_poss</A></STRONG><DD>
+<P>
+POSS: Position synchronisation frame
+
+<DT><STRONG><A NAME="item__item_id3v2_grid">$item_id3v2_grid</A></STRONG><DD>
+<P>
+GRID: Group identification registration
+
+<DT><STRONG><A NAME="item__item_id3v2_uslt">$item_id3v2_uslt</A></STRONG><DD>
+<P>
+USLT: Unsychronized lyric/text transcription
+
+<DT><STRONG><A NAME="item__item_id3v2_encr">$item_id3v2_encr</A></STRONG><DD>
+<P>
+ENCR: Encryption method registration
+
+<DT><STRONG><A NAME="item__item_id3v2_town">$item_id3v2_town</A></STRONG><DD>
+<P>
+TOWN: File owner/licensee
+
+<DT><STRONG><A NAME="item__item_id3v2_wors">$item_id3v2_wors</A></STRONG><DD>
+<P>
+WORS: Official internet radio station homepage
+
+<DT><STRONG><A NAME="item__item_id3v2_etco">$item_id3v2_etco</A></STRONG><DD>
+<P>
+ETCO: Event timing codes
+
+<DT><STRONG><A NAME="item__item_id3v2_equa">$item_id3v2_equa</A></STRONG><DD>
+<P>
+EQUA: Equalization
+
+<DT><STRONG><A NAME="item__item_id3v2_wcom">$item_id3v2_wcom</A></STRONG><DD>
+<P>
+WCOM: Commercial information
+
+<DT><STRONG><A NAME="item__item_id3v2_aenc">$item_id3v2_aenc</A></STRONG><DD>
+<P>
+AENC: Audio encryption
+
+<DT><STRONG><A NAME="item__item_id3v2_tope">$item_id3v2_tope</A></STRONG><DD>
+<P>
+TOPE: Original <CODE>artist(s)/performer(s)</CODE>
+
+<DT><STRONG><A NAME="item__item_id3v2_wcop">$item_id3v2_wcop</A></STRONG><DD>
+<P>
+WCOP: Copyright/Legal information
+
+<DT><STRONG><A NAME="item__item_id3v2_popm">$item_id3v2_popm</A></STRONG><DD>
+<P>
+POPM: Popularimeter
+
+<DT><STRONG><A NAME="item__item_id3v2_wpub">$item_id3v2_wpub</A></STRONG><DD>
+<P>
+WPUB: Publishers official webpage
+
+<DT><STRONG><A NAME="item__item_id3v2_wxxx">$item_id3v2_wxxx</A></STRONG><DD>
+<P>
+WXXX: User defined URL link frame
+
+<DT><STRONG><A NAME="item__item_id3v2_user">$item_id3v2_user</A></STRONG><DD>
+<P>
+USER: Terms of use
+
+</DL>
+<P>
+<HR>
+<H1><A NAME="ACKNOWLEDGEMENTS">ACKNOWLEDGEMENTS</A></H1>
+<P>
+<PRE> Much thanks to Chris Nandor and contributors to MP3::Info... 
+ it saved me a lot of time :) And to Larry Wall for such a great language.
+ 
+ Hello to MMT, UCLA LUG, cX, and of course the DJs of Mister Balak's Neighborhood!
+</PRE>
+<P>
+<HR>
+<H1><A NAME="SEE_ALSO">SEE ALSO</A></H1>
+<DL>
+<DT><STRONG><A NAME="item_MP3">MP3::Info</A></STRONG><DD>
+<P>
+<A
+HREF="http://search.cpan.org/search?dist=MP3-Info">http://search.cpan.org/search?dist=MP3-Info</A>
+
+
+<DT><STRONG><A NAME="item_ID3v2">ID3v2</A></STRONG><DD>
+<P>
+<A HREF="http://www.id3.org/">http://www.id3.org/</A>
+
+<DT><STRONG><A NAME="item_SourceForge">SourceForge</A></STRONG><DD>
+<P>
+<A HREF="http://www.sourceforge.net">http://www.sourceforge.net</A> Damn,
+these guys rock.
+
+<DT><STRONG><A NAME="item_icecast">icecast</A></STRONG><DD>
+<P>
+<A HREF="http://www.icecast.org">http://www.icecast.org</A>
+
+</DL>
+<P>
+<HR>
+<H1><A NAME="AUTHOR_AND_COPYRIGHT">AUTHOR AND COPYRIGHT</A></H1>
+<P>
+<PRE> Neon Goat MP3 Report Generator
+ v1.0.2 - April 5, 2000
+ Copyright (C) 2000, David Parker, Neon Goat Productions.
+ 
+ This program is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation; either version 2 of the License, or
+ (at your option) any later version.
+ 
+ See COPYING or <A HREF="http://www.gnu.org">http://www.gnu.org</A> for more information.
+ 
+ David Parker
+ david@neongoat.com
+ <A HREF="http://www.neongoat.com">http://www.neongoat.com</A>
+ <A HREF="http://mp3report.sourceforge.net">http://mp3report.sourceforge.net</A>
+</PRE>
+</BODY>
+
+</HTML>
