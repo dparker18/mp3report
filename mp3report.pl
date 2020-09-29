@@ -473,7 +473,7 @@ The local date and time when the report was generated.
 
 =item $t_dirs
 
-The list of parent directories that was scanned in the report. Each directory is separated by C<<BR&gt;&amp;nbsp;&amp;nbsp;> so that they are on seperate lines and indented.
+The list of parent directories that was scanned in the report. Each directory is separated by C<<BR&gt;&amp;nbsp;&amp;nbsp;> so that they are on separate lines and indented.
 
 =item $t_numdirs
 
@@ -493,7 +493,7 @@ The total playing time of all songs combined. This is formatted into an English 
 
 =item $t_exectime
 
-The total time it took to genereate the report. This is formatted into an English sentence (4 days, 3 hours, 2 minutes, 1 second).
+The total time it took to generate the report. This is formatted into an English sentence (4 days, 3 hours, 2 minutes, 1 second).
 
 =item $t_avgsize
 
