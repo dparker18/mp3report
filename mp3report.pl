@@ -152,7 +152,12 @@ exit;
 
 sub dodir {
   my $dir = shift;
-  print STDERR "\nScanning $dir...";
+  if ( -r $dir ) {
+    print STDERR "\nScanning $dir...";
+  } else {
+    print STDERR "\nSkipping $dir...";
+    return
+  }
   opendir(DIR, $dir) || die("couldn't open dir $dir: $!");
   my @files = sort grep { /\.mp3$/i } readdir(DIR);
   if (@files) {
