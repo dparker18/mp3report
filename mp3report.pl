@@ -16,7 +16,7 @@ use Getopt::Long;
 use IO::File;
 use MP3::Info;
 
-my ($tnumdir, $tnumfile, $tsize, $tmin, $tsec) = 0;
+my ($tnumdir, $tnumfile, $tsize, $tmin, $tsec) = (0, 0, 0, 0, 0);
 my ($template_header, $template_itemheader, $template_itemitem, $template_itemfooter, $template_footer);
 my (@dirs, $printmode, $title, $outfile);
 
@@ -129,8 +129,8 @@ $t_numdirs = $tnumdir;
 $t_numfiles = $tnumfile;
 $t_size = sprintf("%.2f GB (%.2f MB)", $tsize/1024/1024/1024, $tsize/1024/1024);
 $t_playtime = englishtime(60 * $tmin + $tsec);
-$t_avgsize = sprintf("%.2f MB", $tsize/1024/1024/$t_numfiles);
-$t_avgplaytime = englishtime(sprintf("%.2f", (60 * $tmin + $tsec)/$t_numfiles));
+$t_avgsize = sprintf("%.2f MB", $t_numfiles ? $tsize/1024/1024/$t_numfiles : 0);
+$t_avgplaytime = englishtime(sprintf("%.2f", $t_numfiles ? (60 * $tmin + $tsec)/$t_numfiles : 0));
 
 $report_header = $template_header;
 $report_footer = $template_footer;
